@@ -1,0 +1,49 @@
+.footer1 {
+    background: #F7F7F7;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+
+.footer2 {
+    background: #F7F7F7;
+}
+
+
+.footerLogo{
+    max-width: 300px;
+    margin: auto;
+    width: 100%;
+}
+
+.screenSize{
+    max-width: 1300px;
+    margin: auto;
+}
+
+.footerTextStyleHeading{
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.footerTextStyle{
+    font-size: 13px;
+    color: gray;
+    font-weight: 500;
+}
+
+.copyrightAndOther{
+    margin-left: 40px;
+    font-size: 13px;
+    margin-top: -13px;
+}
+
+.footerOptions {
+    display: inline;
+    cursor: pointer;
+}
+
+.footerOptions:hover {
+    display: inline;
+    text-decoration: underline;
+    cursor: pointer;
+}
