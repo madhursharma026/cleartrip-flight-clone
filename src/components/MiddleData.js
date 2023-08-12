@@ -2,17 +2,54 @@ import '../styles/MiddleData.css'
 import React, { useState } from "react";
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
+import TextField from '@mui/material/TextField';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DatePicker from "react-multi-date-picker";
 import InputGroup from 'react-bootstrap/InputGroup';
+import Autocomplete from '@mui/material/Autocomplete';
 
 
 
 function MiddleData() {
     let todayDate = new Date()
     let threeDaysForwardtodayDate = new Date()
+    const [takeOffSearchQuery, setTakeOffSearchQuery] = useState('');
+    const [fightTakeOffAllData, setfightTakeOffAllData] = useState([]);
+    const [landingSearchQuery, setLandingSearchQuery] = useState('');
+    const [fightLandingAllData, setfightLandingAllData] = useState([]);
     const [fightTakeOffDate, setFightTakeOffDate] = useState(todayDate);
     const [fightLandingDate, setFightLandingDate] = useState(threeDaysForwardtodayDate.setDate(threeDaysForwardtodayDate.getDate() + 3));
+
+    function takeOffWhereFunction(value) {
+        const wordCount = value.length;
+        setTakeOffSearchQuery(value)
+        if (wordCount > 3) {
+            // https://airlabs.co/api/v9/suggest?q=bho&api_key=13eb1321-bf87-4a2e-8f8f-2c90f72471e0
+            fetch(`https://airlabs.co/api/v9/suggest?q=${value}&api_key=13eb1321-bf87-4a2e-8f8f-2c90f72471e0`)
+                .then(response => {
+                    return response.json()
+                })
+                .then(data => {
+                    setfightTakeOffAllData(data)
+                })
+        }
+    }
+    
+    function landingWhereFunction(value) {
+        const wordCount = value.length;
+        setLandingSearchQuery(value)
+        if (wordCount > 3) {
+            // https://airlabs.co/api/v9/suggest?q=bho&api_key=13eb1321-bf87-4a2e-8f8f-2c90f72471e0
+            fetch(`https://airlabs.co/api/v9/suggest?q=${value}&api_key=13eb1321-bf87-4a2e-8f8f-2c90f72471e0`)
+                .then(response => {
+                    return response.json()
+                })
+                .then(data => {
+                    setfightLandingAllData(data)
+                })
+        }
+    }
+
 
     return (
         <div>
@@ -109,35 +146,67 @@ function MiddleData() {
                     </div>
 
 
-                    <div className="row mt-4">
+                    <div className="row mt-4 text-center">
                         <div className="col-sm-6 m-0 p-0">
-                            <InputGroup className="mb-3">
-                                <InputGroup.Text id="basic-addon1"><i class="fa fa-plane" aria-hidden="true"></i></InputGroup.Text>
-                                <Form.Control style={{ fontWeight: 600, fontSize: '18px' }}
-                                    placeholder="Where From?"
-                                    aria-describedby="basic-addon1"
-                                />
-                            </InputGroup>
+                            <Dropdown style={{ marginTop: '-15px', width: '100%' }}>
+                                <Dropdown.Toggle className='dropdownToggle' style={{ background: 'transparent', color: 'black', border: '1px solid white', fontWeight: '600', fontSize: '20px' }}>
+                                    <div class="flightTakeOffInput">
+                                        <input type="text" value={takeOffSearchQuery} placeholder="Where From?" onChange={(e) => takeOffWhereFunction(e.target.value)} className='w-100 mt-2'></input>
+                                    </div>
+                                </Dropdown.Toggle>
+                                {fightTakeOffAllData.length != 0 ?
+                                    <>
+                                        <Dropdown.Menu>
+                                            <>
+                                                {fightTakeOffAllData.response.airports.map((fightTakeOffData) =>
+                                                    <>
+                                                        <Dropdown.Item style={{ fontWeight: '600' }} onClick={() => setTakeOffSearchQuery(`${fightTakeOffData.city_code} - ${fightTakeOffData.name}`)}><b>{fightTakeOffData.city_code}</b> - {fightTakeOffData.name}</Dropdown.Item>
+                                                        :
+                                                    </>
+                                                )}
+                                            </>
+                                        </Dropdown.Menu>
+                                    </>
+                                    :
+                                    <></>
+                                }
+                            </Dropdown>
                         </div>
                         <div className="col-sm-6 m-0 p-0">
-                            <InputGroup className="mb-3">
-                                <InputGroup.Text id="basic-addon1"><i class="fa fa-plane" aria-hidden="true"></i></InputGroup.Text>
-                                <Form.Control style={{ fontWeight: 600, fontSize: '18px' }}
-                                    placeholder="Where To?"
-                                    aria-describedby="basic-addon1"
-                                />
-                            </InputGroup>
+                            <Dropdown style={{ marginTop: '-15px', width: '100%' }}>
+                                <Dropdown.Toggle className='dropdownToggle' style={{ background: 'transparent', color: 'black', border: '1px solid white', fontWeight: '600', fontSize: '20px' }}>
+                                    <div class="flightLandingInput">
+                                        <input type="text" value={landingSearchQuery} placeholder="Where To?" onChange={(e) => landingWhereFunction(e.target.value)} className='w-100 mt-2'></input>
+                                    </div>
+                                </Dropdown.Toggle>
+                                {fightLandingAllData.length != 0 ?
+                                    <>
+                                        <Dropdown.Menu>
+                                            <>
+                                                {fightLandingAllData.response.airports.map((landingData) =>
+                                                    <>
+                                                        <Dropdown.Item style={{ fontWeight: '600' }} onClick={() => setLandingSearchQuery(`${landingData.city_code} - ${landingData.name}`)}><b>{landingData.city_code}</b> - {landingData.name}</Dropdown.Item>
+                                                        :
+                                                    </>
+                                                )}
+                                            </>
+                                        </Dropdown.Menu>
+                                    </>
+                                    :
+                                    <></>
+                                }
+                            </Dropdown>
                         </div>
                     </div>
 
                     <div className="row mt-2">
                         <div className="col-sm-8 m-0 p-0 row">
                             <div className="col-6 p-0 m-0">
-                                <DatePicker value={fightTakeOffDate} onChange={setFightTakeOffDate} style={{ fontSize: '18px', height: 40, marginRight: '5px', width: '96%' }} />
+                                <DatePicker value={fightTakeOffDate} onChange={setFightTakeOffDate} style={{ fontSize: '18px', height: 40, width: '100%', marginRight: '5px', width: '96%' }} />
 
                             </div>
                             <div className="col-6 p-0 m-0">
-                                <DatePicker value={fightLandingDate} onChange={setFightLandingDate} style={{ fontSize: '18px', height: 40, marginRight: '5px', width: '96%' }} />
+                                <DatePicker value={fightLandingDate} onChange={setFightLandingDate} style={{ fontSize: '18px', height: 40, width: '100%', marginRight: '5px', width: '96%' }} />
                             </div>
                         </div>
                         <div className="col-sm-4 m-0 p-0 mt-sm-0 mt-2">
