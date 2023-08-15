@@ -21,7 +21,7 @@ function MiddleData() {
     const [cabin_class, setCabin_class] = useState('Economy');
     const [startFrom, setStartFrom] = useState('');
     const [endTo, setEndTo] = useState('');
-    const [flightdetails, setFlightdetails] = useState()
+    const [flightdetails, setFlightdetails] = useState('')
 
     function takeOffWhereFunction(value) {
         const wordCount = value.length;
@@ -234,39 +234,45 @@ function MiddleData() {
                 </Card.Body>
             </Card>
 
-            <h1 className='mt-5'>Flight Details</h1>
-            <table class="table mt-3">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col" className='text-center'>Flight Code</th>
-                        <th scope="col">Arrival Time</th>
-                        <th scope="col">Departure Time</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {flightdetails.legs === [] ?
-                        <h1 className="mt-5 text-center">
-                            No Data Found
-                        </h1>
-                        :
-                        <>
-                            {flightdetails.legs.map((flightdetail, index) =>
-                                <tr>
-                                    <th scope="row">{index + 1}</th>
-                                    <td className='text-center'> <b>{flightdetail.airlineCodes}</b></td>
-                                    <td>{flightdetail.departureTime}</td>
-                                    <td>{flightdetail.arrivalTime}</td>
-                                    <td>₹ {flightdetails.fares[index].price.totalAmount}</td>
-                                    <td><button type="button" class="btn btn-warning">Book</button></td>
-                                </tr>
-                            )}
-                        </>
-                    }
-                </tbody>
-            </table>
+            {(flightdetails !== '') ?
+                <>
+                    <h1 className='mt-5'>Flight Details</h1>
+                    <table class="table mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col" className='text-center'>Flight Code</th>
+                                <th scope="col">Arrival Time</th>
+                                <th scope="col">Departure Time</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {flightdetails.legs === [] ?
+                                <h1 className="mt-5 text-center">
+                                    No Data Found
+                                </h1>
+                                :
+                                <>
+                                    {flightdetails.legs.map((flightdetail, index) =>
+                                        <tr>
+                                            <th scope="row">{index + 1}</th>
+                                            <td className='text-center'> <b>{flightdetail.airlineCodes}</b></td>
+                                            <td>{flightdetail.departureTime}</td>
+                                            <td>{flightdetail.arrivalTime}</td>
+                                            <td>₹ {flightdetails.fares[index].price.totalAmount}</td>
+                                            <td><button type="button" class="btn btn-warning">Book</button></td>
+                                        </tr>
+                                    )}
+                                </>
+                            }
+                        </tbody>
+                    </table>
+                </>
+                :
+                <></>
+            }
         </div>
     );
 }
