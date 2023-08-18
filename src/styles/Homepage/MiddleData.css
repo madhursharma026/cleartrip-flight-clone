@@ -1,0 +1,55 @@
+input {
+    padding: 3px;
+    padding-left: 45px;
+    border-radius: 5px;
+}
+
+.flightTakeOffInput {
+    display: inline;
+    position: relative;
+    background-color: #dedede;
+}
+
+.flightTakeOffInput:before {
+    top: 0;
+    z-index: 1;
+    margin-top: -5px;
+    content: '\f072';
+    padding-top: 3px;
+    padding-left: 7px;
+    padding-right: 7px;
+    position: absolute;
+    padding-bottom: 4px;
+    border: 1px solid black;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    font-family: "Font Awesome 5 Free";
+}
+
+.flightLandingInput {
+    display: inline;
+    position: relative;
+    background-color: #dedede;
+}
+
+.flightLandingInput:before {
+    top: 0;
+    z-index: 1;
+    margin-top: -5px;
+    content: '\f072';
+    padding-top: 3px;
+    padding-left: 7px;
+    padding-right: 7px;
+    position: absolute;
+    padding-bottom: 4px;
+    transform: rotate(180deg);
+    border: 1px solid black;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-family: "Font Awesome 5 Free";
+}
+
+.dropdownToggle::after {
+    display: none !important;
+}
+

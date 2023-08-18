@@ -1,0 +1,53 @@
+.selectedSidebarOptions {
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: 5px;
+    background: #D6E8FC;
+}
+
+.sidebarOptions {
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 500;
+    border-radius: 5px;
+}
+
+.sidebarOptions:hover {
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: 5px;
+    background: #D6E8FC;
+}
+
+.optionName {
+    font-size: 16px;
+}
+
+@media (min-width: 991px) {
+    .leftSidebarAfterLGScrn {
+        display: none;
+    }
+}
+
+@media (max-width: 992px) {
+    .leftSidebarBeforeLGScrn {
+        display: none;
+    }
+
+    .optionName {
+        display: none;
+    }
+
+    .selectedSidebarOptions {
+        text-align: center;
+    }
+
+    .sidebarOptions {
+        text-align: center;
+    }
+
+    .leftSidebarAfterLGScrn {
+        display: block;
+    }
+}

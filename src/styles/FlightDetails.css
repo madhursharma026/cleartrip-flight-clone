@@ -1,0 +1,19 @@
+.mainContainerFlightDetails {
+    overflow-y: hidden;
+}
+
+.appContainerFlightDetails {
+    background: '#FCFCFC';
+    padding-bottom: '50px';
+}
+
+.screenSizeFlightDetails {
+    margin: auto;
+    max-width: 1300px;
+}
+
+@media (max-width: 768px) {
+    .col3{
+        display: none;
+    }
+}

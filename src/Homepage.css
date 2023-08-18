@@ -1,0 +1,45 @@
+.mainContainer {
+    overflow-y: hidden;
+}
+
+.appContainer {
+    background: '#FCFCFC';
+    padding-bottom: '50px';
+}
+
+.screenSize {
+    margin: auto;
+    max-width: 1300px;
+}
+
+.columnStyle {
+    margin: '0';
+    padding: '5px';
+}
+
+.visitingPlaces {
+    border-radius: 10px;
+}
+
+.ImgContainer {
+    color: white;
+    position: relative;
+}
+
+.textStyle {
+    font-size: 15px;
+}
+
+.ImgText {
+    left: 16px;
+    bottom: 8px;
+    font-weight: 700;
+    position: absolute;
+}
+
+@media (max-width: 992px) {
+    .rightSidebar {
+        display: none;
+    }
+}
+
