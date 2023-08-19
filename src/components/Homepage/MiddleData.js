@@ -58,7 +58,7 @@ function MiddleData() {
         if (tripType === 'roundtrip' && fightLandingDate === '') {
             alert("Please enter return date")
         } else {
-            fetch(`https://api.flightapi.io/${tripType}/64df132b437fab31f23e4077/${startFrom}/${endTo}/${fightTakeOffDate}${fightLandingDate ? '/' : ''}${fightLandingDate}/${number_of_adults}/${number_of_childrens}/${number_of_infants}/${cabin_class}/INR`)
+            fetch(`https://api.flightapi.io/${tripType}/64e0629e7bb78fb3c7a1de20/${startFrom}/${endTo}/${fightTakeOffDate}${fightLandingDate ? '/' : ''}${fightLandingDate}/${number_of_adults}/${number_of_childrens}/${number_of_infants}/${cabin_class}/INR`)
                 .then(response => {
                     return response.json()
                 })
@@ -68,7 +68,7 @@ function MiddleData() {
                     history("/FlightDetails", { state: { data: data } });
                 })
         }
-        // console.log(`https://api.flightapi.io/${tripType}/64df132b437fab31f23e4077/${startFrom}/${endTo}/${fightTakeOffDate}${fightLandingDate ? '/' : ''}${fightLandingDate}/${number_of_adults}/${number_of_childrens}/${number_of_infants}/${cabin_class}/INR`)
+        // console.log(`https://api.flightapi.io/${tripType}/64e0629e7bb78fb3c7a1de20/${startFrom}/${endTo}/${fightTakeOffDate}${fightLandingDate ? '/' : ''}${fightLandingDate}/${number_of_adults}/${number_of_childrens}/${number_of_infants}/${cabin_class}/INR`)
     }
 
     return (
