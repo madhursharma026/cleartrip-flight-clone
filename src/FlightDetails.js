@@ -11,6 +11,7 @@ function FlightDetails() {
         flightdetails = history.state.data;
     }
 
+    const [showID, setShowID] = useState()
     const [flightPrice, setFlightPrice] = useState('')
     const [flightNonStop, setFlightNonStop] = useState(false)
     const [flightAfternoon, setFlightAfternoon] = useState(false)
@@ -21,6 +22,14 @@ function FlightDetails() {
 
     function flightAfternoonFunction() {
         setFlightAfternoon(!flightAfternoon)
+    }
+
+    function showIDFunction(id) {
+        if (showID === id) {
+            setShowID('')
+        } else {
+            setShowID(id)
+        }
     }
 
     return (
@@ -183,7 +192,7 @@ function FlightDetails() {
                                                     {(flightNonStop === true && flightAfternoon === true) ?
                                                         <>
                                                             {(flightdetail.stopoverCode === 'DIRECT' && flightdetail.departureTime >= '12:00' && flightdetail.departureTime <= '16:00') ?
-                                                                <div className="row mt-4 py-2 pb-0" style={{ border: '1px solid #E6E6E6', marginLeft: '10px' }}>
+                                                                <div className="row mt-4 py-2 pb-0" style={{ border: '1px solid #E6E6E6', marginLeft: '10px', cursor: 'pointer' }} onClick={() => showIDFunction(index)}>
                                                                     <div className="col-md-2 col text-center col1">
                                                                         <img src="https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/6E_2x.png" alt="#ImgNotFound" width='30px' /> <h6 style={{ fontSize: '14px', margin: 0 }}>
                                                                             {flightdetails.airlines.map((flightdetailAirlines, index) =>
@@ -210,6 +219,54 @@ function FlightDetails() {
                                                                     <div className="col-md-2 col text-center col6">
                                                                         <button type="button" class="btn w-100 mt-2 text-white" style={{ background: '#D4581D' }}><b>BOOK</b></button>
                                                                     </div>
+
+                                                                    {(showID === index) ?
+                                                                        <ul class="list-group p-3">
+                                                                            <li class="list-group-item">
+                                                                                <h6> {flightdetails.search.legs[0].departureCity.name} <i class="fa fa-long-arrow-right"></i> {flightdetails.search.legs[0].arrivalCity.name}</h6>
+                                                                                <hr style={{ marginTop: '-4px' }} />
+                                                                                <div className="row">
+                                                                                    <div className="col-3 text-center">
+                                                                                        <img src="https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/6E_2x.png" alt="#ImgNotFound" width='30px' />
+                                                                                        <h6 className='mb-2' style={{ fontSize: '14px', margin: 0 }}>
+                                                                                            {flightdetails.airlines.map((flightdetailAirlines, index) =>
+                                                                                                <>{(flightdetailAirlines.code === flightdetail.segments[0].airlineCode) ?
+                                                                                                    <>{flightdetailAirlines.name}</>
+                                                                                                    :
+                                                                                                    <></>
+                                                                                                }</>
+                                                                                            )}
+                                                                                        </h6>
+                                                                                        <h6 style={{ fontSize: '11px' }}>{flightdetail.segments[0].designatorCode}</h6>
+                                                                                        <h6 style={{ fontSize: '11px', marginTop: '-7px' }}>{flightdetail.segments[0].cabin}</h6>
+                                                                                    </div>
+
+                                                                                    <div className="col-2 text-center">
+                                                                                        <h5>{flightdetail.segments[0].departureAirportCode} - <b>{flightdetail.departureTime}</b></h5>
+                                                                                        <h6 style={{ fontSize: '14px' }}>{flightdetails.search.legs[0].departureCity.name} - {flightdetails.search.legs[0].departureCity.countryCode}</h6>
+                                                                                    </div>
+
+                                                                                    <div className="col-1 text-center">
+                                                                                        <i class="fa fa-clock-o" style={{ fontSize: '30px' }}></i>
+                                                                                    </div>
+                                                                                    <div className="col-2 text-center">
+                                                                                        <h5>{flightdetail.segments[0].arrivalAirportCode} - <b>{flightdetail.arrivalTime}</b></h5>
+                                                                                        <h6 style={{ fontSize: '14px' }}>{flightdetails.search.legs[0].arrivalCity.name} - {flightdetails.search.legs[0].arrivalCity.countryCode}</h6>
+                                                                                    </div>
+                                                                                    <div className="col-2 text-center">
+                                                                                        <h6 style={{ fontSize: '14px' }}>Check-in baggage</h6>
+                                                                                        <h6 style={{ fontSize: '14px' }}>Cabin baggage</h6>
+                                                                                    </div>
+                                                                                    <div className="col-2 text-center">
+                                                                                        <h6 style={{ fontSize: '14px' }}>15kg / adult</h6>
+                                                                                        <h6 style={{ fontSize: '14px' }}>7kg / adult</h6>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                        </ul>
+                                                                        :
+                                                                        <></>
+                                                                    }
                                                                 </div>
                                                                 :
                                                                 <></>
@@ -220,7 +277,7 @@ function FlightDetails() {
                                                             {(flightAfternoon === true) ?
                                                                 <>
                                                                     {(flightdetail.departureTime >= '12:00' && flightdetail.departureTime <= '16:00') ?
-                                                                        <div className="row mt-4 py-2 pb-0" style={{ border: '1px solid #E6E6E6', marginLeft: '10px' }}>
+                                                                        <div className="row mt-4 py-2 pb-0" style={{ border: '1px solid #E6E6E6', marginLeft: '10px', cursor: 'pointer' }} onClick={() => showIDFunction(index)}>
                                                                             <div className="col-md-2 col text-center col1">
                                                                                 <img src="https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/6E_2x.png" alt="#ImgNotFound" width='30px' /> <h6 style={{ fontSize: '14px', margin: 0 }}>
                                                                                     {flightdetails.airlines.map((flightdetailAirlines, index) =>
@@ -247,6 +304,54 @@ function FlightDetails() {
                                                                             <div className="col-md-2 col text-center col6">
                                                                                 <button type="button" class="btn w-100 mt-2 text-white" style={{ background: '#D4581D' }}><b>BOOK</b></button>
                                                                             </div>
+
+                                                                            {(showID === index) ?
+                                                                                <ul class="list-group p-3">
+                                                                                    <li class="list-group-item">
+                                                                                        <h6> {flightdetails.search.legs[0].departureCity.name} <i class="fa fa-long-arrow-right"></i> {flightdetails.search.legs[0].arrivalCity.name}</h6>
+                                                                                        <hr style={{ marginTop: '-4px' }} />
+                                                                                        <div className="row">
+                                                                                            <div className="col-3 text-center">
+                                                                                                <img src="https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/6E_2x.png" alt="#ImgNotFound" width='30px' />
+                                                                                                <h6 className='mb-2' style={{ fontSize: '14px', margin: 0 }}>
+                                                                                                    {flightdetails.airlines.map((flightdetailAirlines, index) =>
+                                                                                                        <>{(flightdetailAirlines.code === flightdetail.segments[0].airlineCode) ?
+                                                                                                            <>{flightdetailAirlines.name}</>
+                                                                                                            :
+                                                                                                            <></>
+                                                                                                        }</>
+                                                                                                    )}
+                                                                                                </h6>
+                                                                                                <h6 style={{ fontSize: '11px' }}>{flightdetail.segments[0].designatorCode}</h6>
+                                                                                                <h6 style={{ fontSize: '11px', marginTop: '-7px' }}>{flightdetail.segments[0].cabin}</h6>
+                                                                                            </div>
+
+                                                                                            <div className="col-2 text-center">
+                                                                                                <h5>{flightdetail.segments[0].departureAirportCode} - <b>{flightdetail.departureTime}</b></h5>
+                                                                                                <h6 style={{ fontSize: '14px' }}>{flightdetails.search.legs[0].departureCity.name} - {flightdetails.search.legs[0].departureCity.countryCode}</h6>
+                                                                                            </div>
+
+                                                                                            <div className="col-1 text-center">
+                                                                                                <i class="fa fa-clock-o" style={{ fontSize: '30px' }}></i>
+                                                                                            </div>
+                                                                                            <div className="col-2 text-center">
+                                                                                                <h5>{flightdetail.segments[0].arrivalAirportCode} - <b>{flightdetail.arrivalTime}</b></h5>
+                                                                                                <h6 style={{ fontSize: '14px' }}>{flightdetails.search.legs[0].arrivalCity.name} - {flightdetails.search.legs[0].arrivalCity.countryCode}</h6>
+                                                                                            </div>
+                                                                                            <div className="col-2 text-center">
+                                                                                                <h6 style={{ fontSize: '14px' }}>Check-in baggage</h6>
+                                                                                                <h6 style={{ fontSize: '14px' }}>Cabin baggage</h6>
+                                                                                            </div>
+                                                                                            <div className="col-2 text-center">
+                                                                                                <h6 style={{ fontSize: '14px' }}>15kg / adult</h6>
+                                                                                                <h6 style={{ fontSize: '14px' }}>7kg / adult</h6>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                </ul>
+                                                                                :
+                                                                                <></>
+                                                                            }
                                                                         </div>
                                                                         :
                                                                         <></>
@@ -259,7 +364,7 @@ function FlightDetails() {
                                                             {(flightNonStop === true) ?
                                                                 <>
                                                                     {(flightdetail.stopoverCode === 'DIRECT') ?
-                                                                        <div className="row mt-4 py-2 pb-0" style={{ border: '1px solid #E6E6E6', marginLeft: '10px' }}>
+                                                                        <div className="row mt-4 py-2 pb-0" style={{ border: '1px solid #E6E6E6', marginLeft: '10px', cursor: 'pointer' }} onClick={() => showIDFunction(index)}>
                                                                             <div className="col-md-2 col text-center col1">
                                                                                 <img src="https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/6E_2x.png" alt="#ImgNotFound" width='30px' /> <h6 style={{ fontSize: '14px', margin: 0 }}>
                                                                                     {flightdetails.airlines.map((flightdetailAirlines, index) =>
@@ -286,6 +391,54 @@ function FlightDetails() {
                                                                             <div className="col-md-2 col text-center col6">
                                                                                 <button type="button" class="btn w-100 mt-2 text-white" style={{ background: '#D4581D' }}><b>BOOK</b></button>
                                                                             </div>
+
+                                                                            {(showID === index) ?
+                                                                                <ul class="list-group p-3">
+                                                                                    <li class="list-group-item">
+                                                                                        <h6> {flightdetails.search.legs[0].departureCity.name} <i class="fa fa-long-arrow-right"></i> {flightdetails.search.legs[0].arrivalCity.name}</h6>
+                                                                                        <hr style={{ marginTop: '-4px' }} />
+                                                                                        <div className="row">
+                                                                                            <div className="col-3 text-center">
+                                                                                                <img src="https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/6E_2x.png" alt="#ImgNotFound" width='30px' />
+                                                                                                <h6 className='mb-2' style={{ fontSize: '14px', margin: 0 }}>
+                                                                                                    {flightdetails.airlines.map((flightdetailAirlines, index) =>
+                                                                                                        <>{(flightdetailAirlines.code === flightdetail.segments[0].airlineCode) ?
+                                                                                                            <>{flightdetailAirlines.name}</>
+                                                                                                            :
+                                                                                                            <></>
+                                                                                                        }</>
+                                                                                                    )}
+                                                                                                </h6>
+                                                                                                <h6 style={{ fontSize: '11px' }}>{flightdetail.segments[0].designatorCode}</h6>
+                                                                                                <h6 style={{ fontSize: '11px', marginTop: '-7px' }}>{flightdetail.segments[0].cabin}</h6>
+                                                                                            </div>
+
+                                                                                            <div className="col-2 text-center">
+                                                                                                <h5>{flightdetail.segments[0].departureAirportCode} - <b>{flightdetail.departureTime}</b></h5>
+                                                                                                <h6 style={{ fontSize: '14px' }}>{flightdetails.search.legs[0].departureCity.name} - {flightdetails.search.legs[0].departureCity.countryCode}</h6>
+                                                                                            </div>
+
+                                                                                            <div className="col-1 text-center">
+                                                                                                <i class="fa fa-clock-o" style={{ fontSize: '30px' }}></i>
+                                                                                            </div>
+                                                                                            <div className="col-2 text-center">
+                                                                                                <h5>{flightdetail.segments[0].arrivalAirportCode} - <b>{flightdetail.arrivalTime}</b></h5>
+                                                                                                <h6 style={{ fontSize: '14px' }}>{flightdetails.search.legs[0].arrivalCity.name} - {flightdetails.search.legs[0].arrivalCity.countryCode}</h6>
+                                                                                            </div>
+                                                                                            <div className="col-2 text-center">
+                                                                                                <h6 style={{ fontSize: '14px' }}>Check-in baggage</h6>
+                                                                                                <h6 style={{ fontSize: '14px' }}>Cabin baggage</h6>
+                                                                                            </div>
+                                                                                            <div className="col-2 text-center">
+                                                                                                <h6 style={{ fontSize: '14px' }}>15kg / adult</h6>
+                                                                                                <h6 style={{ fontSize: '14px' }}>7kg / adult</h6>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                </ul>
+                                                                                :
+                                                                                <></>
+                                                                            }
                                                                         </div>
                                                                         :
                                                                         <></>
@@ -298,7 +451,7 @@ function FlightDetails() {
                                                             {(flightPrice !== '') ?
                                                                 <>
                                                                     {(flightdetails.fares[index].price.totalAmount >= flightPrice) ?
-                                                                        <div className="row mt-4 py-2 pb-0" style={{ border: '1px solid #E6E6E6', marginLeft: '10px' }}>
+                                                                        <div className="row mt-4 py-2 pb-0" style={{ border: '1px solid #E6E6E6', marginLeft: '10px', cursor: 'pointer' }} onClick={() => showIDFunction(index)}>
                                                                             <div className="col-md-2 col text-center col1">
                                                                                 <img src="https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/6E_2x.png" alt="#ImgNotFound" width='30px' /> <h6 style={{ fontSize: '14px', margin: 0 }}>
                                                                                     {flightdetails.airlines.map((flightdetailAirlines, index) =>
@@ -325,6 +478,54 @@ function FlightDetails() {
                                                                             <div className="col-md-2 col text-center col6">
                                                                                 <button type="button" class="btn w-100 mt-2 text-white" style={{ background: '#D4581D' }}><b>BOOK</b></button>
                                                                             </div>
+
+                                                                            {(showID === index) ?
+                                                                                <ul class="list-group p-3">
+                                                                                    <li class="list-group-item">
+                                                                                        <h6> {flightdetails.search.legs[0].departureCity.name} <i class="fa fa-long-arrow-right"></i> {flightdetails.search.legs[0].arrivalCity.name}</h6>
+                                                                                        <hr style={{ marginTop: '-4px' }} />
+                                                                                        <div className="row">
+                                                                                            <div className="col-3 text-center">
+                                                                                                <img src="https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/6E_2x.png" alt="#ImgNotFound" width='30px' />
+                                                                                                <h6 className='mb-2' style={{ fontSize: '14px', margin: 0 }}>
+                                                                                                    {flightdetails.airlines.map((flightdetailAirlines, index) =>
+                                                                                                        <>{(flightdetailAirlines.code === flightdetail.segments[0].airlineCode) ?
+                                                                                                            <>{flightdetailAirlines.name}</>
+                                                                                                            :
+                                                                                                            <></>
+                                                                                                        }</>
+                                                                                                    )}
+                                                                                                </h6>
+                                                                                                <h6 style={{ fontSize: '11px' }}>{flightdetail.segments[0].designatorCode}</h6>
+                                                                                                <h6 style={{ fontSize: '11px', marginTop: '-7px' }}>{flightdetail.segments[0].cabin}</h6>
+                                                                                            </div>
+
+                                                                                            <div className="col-2 text-center">
+                                                                                                <h5>{flightdetail.segments[0].departureAirportCode} - <b>{flightdetail.departureTime}</b></h5>
+                                                                                                <h6 style={{ fontSize: '14px' }}>{flightdetails.search.legs[0].departureCity.name} - {flightdetails.search.legs[0].departureCity.countryCode}</h6>
+                                                                                            </div>
+
+                                                                                            <div className="col-1 text-center">
+                                                                                                <i class="fa fa-clock-o" style={{ fontSize: '30px' }}></i>
+                                                                                            </div>
+                                                                                            <div className="col-2 text-center">
+                                                                                                <h5>{flightdetail.segments[0].arrivalAirportCode} - <b>{flightdetail.arrivalTime}</b></h5>
+                                                                                                <h6 style={{ fontSize: '14px' }}>{flightdetails.search.legs[0].arrivalCity.name} - {flightdetails.search.legs[0].arrivalCity.countryCode}</h6>
+                                                                                            </div>
+                                                                                            <div className="col-2 text-center">
+                                                                                                <h6 style={{ fontSize: '14px' }}>Check-in baggage</h6>
+                                                                                                <h6 style={{ fontSize: '14px' }}>Cabin baggage</h6>
+                                                                                            </div>
+                                                                                            <div className="col-2 text-center">
+                                                                                                <h6 style={{ fontSize: '14px' }}>15kg / adult</h6>
+                                                                                                <h6 style={{ fontSize: '14px' }}>7kg / adult</h6>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                </ul>
+                                                                                :
+                                                                                <></>
+                                                                            }
                                                                         </div>
                                                                         :
                                                                         <></>
@@ -337,7 +538,7 @@ function FlightDetails() {
                                                     }
 
                                                     {(flightNonStop === false && flightAfternoon === false && flightPrice === '') ?
-                                                        <div className="row mt-4 py-2 pb-0" style={{ border: '1px solid #E6E6E6', marginLeft: '10px' }}>
+                                                        <div className="row mt-4 py-2 pb-0" style={{ border: '1px solid #E6E6E6', marginLeft: '10px', cursor: 'pointer' }} onClick={() => showIDFunction(index)}>
                                                             <div className="col-md-2 col text-center col1">
                                                                 <img src="https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/6E_2x.png" alt="#ImgNotFound" width='30px' /> <h6 style={{ fontSize: '14px', margin: 0 }}>
                                                                     {flightdetails.airlines.map((flightdetailAirlines, index) =>
@@ -364,6 +565,54 @@ function FlightDetails() {
                                                             <div className="col-md-2 col text-center col6">
                                                                 <button type="button" class="btn w-100 mt-2 text-white" style={{ background: '#D4581D' }}><b>BOOK</b></button>
                                                             </div>
+
+                                                            {(showID === index) ?
+                                                                <ul class="list-group p-3">
+                                                                    <li class="list-group-item">
+                                                                        <h6> {flightdetails.search.legs[0].departureCity.name} <i class="fa fa-long-arrow-right"></i> {flightdetails.search.legs[0].arrivalCity.name}</h6>
+                                                                        <hr style={{ marginTop: '-4px' }} />
+                                                                        <div className="row">
+                                                                            <div className="col-3 text-center">
+                                                                                <img src="https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/6E_2x.png" alt="#ImgNotFound" width='30px' />
+                                                                                <h6 className='mb-2' style={{ fontSize: '14px', margin: 0 }}>
+                                                                                    {flightdetails.airlines.map((flightdetailAirlines, index) =>
+                                                                                        <>{(flightdetailAirlines.code === flightdetail.segments[0].airlineCode) ?
+                                                                                            <>{flightdetailAirlines.name}</>
+                                                                                            :
+                                                                                            <></>
+                                                                                        }</>
+                                                                                    )}
+                                                                                </h6>
+                                                                                <h6 style={{ fontSize: '11px' }}>{flightdetail.segments[0].designatorCode}</h6>
+                                                                                <h6 style={{ fontSize: '11px', marginTop: '-7px' }}>{flightdetail.segments[0].cabin}</h6>
+                                                                            </div>
+
+                                                                            <div className="col-2 text-center">
+                                                                                <h5>{flightdetail.segments[0].departureAirportCode} - <b>{flightdetail.departureTime}</b></h5>
+                                                                                <h6 style={{ fontSize: '14px' }}>{flightdetails.search.legs[0].departureCity.name} - {flightdetails.search.legs[0].departureCity.countryCode}</h6>
+                                                                            </div>
+
+                                                                            <div className="col-1 text-center">
+                                                                                <i class="fa fa-clock-o" style={{ fontSize: '30px' }}></i>
+                                                                            </div>
+                                                                            <div className="col-2 text-center">
+                                                                                <h5>{flightdetail.segments[0].arrivalAirportCode} - <b>{flightdetail.arrivalTime}</b></h5>
+                                                                                <h6 style={{ fontSize: '14px' }}>{flightdetails.search.legs[0].arrivalCity.name} - {flightdetails.search.legs[0].arrivalCity.countryCode}</h6>
+                                                                            </div>
+                                                                            <div className="col-2 text-center">
+                                                                                <h6 style={{ fontSize: '14px' }}>Check-in baggage</h6>
+                                                                                <h6 style={{ fontSize: '14px' }}>Cabin baggage</h6>
+                                                                            </div>
+                                                                            <div className="col-2 text-center">
+                                                                                <h6 style={{ fontSize: '14px' }}>15kg / adult</h6>
+                                                                                <h6 style={{ fontSize: '14px' }}>7kg / adult</h6>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                                :
+                                                                <></>
+                                                            }
                                                         </div>
                                                         :
                                                         <></>
